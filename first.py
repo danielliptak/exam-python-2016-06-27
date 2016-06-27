@@ -6,11 +6,12 @@
 def get_every_second(basic_list):
         if type(basic_list) is list:
             selected_numbers = list()
-            for i in range(len(basic_list)-1):
-                if i % 2 == 0:
-                    selected_numbers.append(basic_list[i+1])
+            for i in range(len(basic_list)):
+                if i % 2 != 0:
+                    selected_numbers.append(basic_list[i])
             return selected_numbers
         else:
             return 'Give me list'
 
-print(get_every_second([2, 3, 5, 6, 7, 9, 6, 8, 7, 7, 8]))
+my_list = [1, 2, 3, 4, 5]
+print(get_every_second(my_list))
