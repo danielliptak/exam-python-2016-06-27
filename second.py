@@ -4,3 +4,12 @@
 # it should write "appleappleapple" to the file "tree.txt".
 # the function should not raise an error on any output problem, for example
 # denied permission
+
+try:
+    def note_my_word(file_name, note):
+            f = open(file_name, 'a')
+            f.write(3 * note)
+            f.close()
+    note_my_word('note.txt', 'bananaaaa')
+except:
+    print('Please try again')
