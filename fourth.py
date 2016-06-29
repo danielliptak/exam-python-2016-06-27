@@ -49,11 +49,12 @@ class Rocket(object):
         self.fuel_lev = fuel_lev
         self.launch_num = launch_num
     def launch(self):
-        if rocket_type == 'falcon1':
+        if self.rocket_type == 'falcon1':
             self.fuel_lev -= 1
-        elif rocket_type == 'falcon9':
-            self.fuel -= 1
-            self.launches += 1
+            self.launch_num += 1
+        elif self.rocket_type == 'falcon9':
+            self.fuel_lev -= 1
+            self.launch_num += 1
     def refill(self):
         if self.rocket_type == 'falcon1':
             used_fuel = 5 - self.fuel_lev
@@ -64,23 +65,29 @@ class Rocket(object):
             self.fuel_lev = 20
             return used_fuel
     def getStats(self):
-        return 'Name: {}, Fuel: {}'.format(self.rocket_type, self.fuel_lev)
+        return 'Name: {}, Fuel: '.format(self.rocket_type, self.fuel_lev)
 
 class SpaceX(object):
     def __init__(self, stored_fuel):
         self.stored_fuel = stored_fuel
-        self.stored_rockets = 0
-        self.launches = 1
+        self.stored_rockets = []
     def addRocket(self, rocket):
-        self.stored_rockets += 1
+        self.stored_rockets.append(rocket)
     def refill_all(self):
-        self.stored_fuel = self.stored_fuel - falcon1.refill() - falcon9.refill() - returned_falcon9.refill()
+        for obj in range(len(self.stored_rockets)):
+            self.stored_fuel = self.stored_fuel - self.stored_rockets[obj].refill()
     def launch_all(self):
-        self.launches += self.stored_rockets
+        for obj in range(len(self.stored_rockets)):
+            self.stored_rockets[obj].launch()
     def buy_fuel(self, amount):
         self.stored_fuel += amount
+    def sum_launches(self):
+        total_launches = 0
+        for obj in range(len(self.stored_rockets)):
+            total_launches += self.stored_rockets[obj].launch_num
+        return total_launches
     def getStats(self):
-         return 'Rocket: {}, Fuel: {}, launches: {}'.format(self.stored_rockets, self.stored_fuel, self.launches)
+        return 'Rocket: {}, Fuel: {}, launches: {}'.format(len(self.stored_rockets), self.stored_fuel, self.sum_launches())
 
 
 space_x = SpaceX(100)
